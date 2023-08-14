@@ -14,6 +14,7 @@ namespace FileOperations
         /// <param name="path"></param>
         /// <param name="eFileSize"></param>
         /// <returns></returns>
+      
         public static string GetFileSize(string path, EFileSize eFileSize = EFileSize.Kb)
         {
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -40,6 +41,31 @@ namespace FileOperations
             }
            
             return size.ToString("0.000")+ eFileSize.ToString();
+        }
+
+        public static string GetFileExtensionName(string path)
+        {
+            //FileInfo fileInfo = new FileInfo(path);
+            //return fileInfo.Extension;
+           return Path.GetExtension(path);
+        }
+
+        public static string GetCreateTime(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            return fileInfo.CreationTime.ToString();
+        }
+
+        public static string GetLastWriteTime(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            return fileInfo.LastWriteTime.ToString();
+        }
+
+        public static string GetInvalidFileNameChar()
+        {
+            string result = new(Path.GetInvalidFileNameChars()) ;
+            return result;
         }
     }
 }
