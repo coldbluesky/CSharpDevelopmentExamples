@@ -1,6 +1,6 @@
 ﻿using FileOperations.Enum;
-using System;
-
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
 namespace FileOperations
 {
     /// <summary>
@@ -67,5 +67,62 @@ namespace FileOperations
             string result = new(Path.GetInvalidFileNameChars()) ;
             return result;
         }
+
+        public static void CreateFile(string path)
+        {
+            File.Create(path) ;
+        }
+
+        public static void DeleteFile(string path)
+        {
+            File.Delete(path);
+        }
+
+        public static void Temp()
+        {
+             
+            FileInfo fileInfo = new FileInfo(Path.GetTempFileName());
+            fileInfo.AppendText();
+
+        } 
+        /// <summary>
+        /// 根据当前时间创建文件夹
+        /// </summary>
+        public static void CreateFileByDateTime(string createPath)
+        {
+            File.Create(createPath+@"/"+DateTime.Now.ToString("yyyyMMddhhmmss")+".txt");
+        }
+
+        public static bool IsFileExist(string path)
+        {
+            return File.Exists(path);
+        }
+        /// <summary>
+        /// 递归获取文件下的所有文件以及子文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="result"></param>
+        public static void GetAllFiles(string path, ref List<string> result)
+        {
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
+            if (!directoryInfo.Exists) return;
+            if(directoryInfo==null) return;
+
+            var fileSystemInfos = directoryInfo.GetFileSystemInfos();
+            foreach (var item in fileSystemInfos)
+            {
+                if(item.Attributes == FileAttributes.Directory)
+                {
+                    GetAllFiles(item.FullName,ref result);
+                }
+                else
+                {
+                    result.Add(item.Name);
+
+                }
+            }
+        }
     }
-}
+}   
