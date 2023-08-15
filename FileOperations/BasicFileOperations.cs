@@ -124,5 +124,42 @@ namespace FileOperations
                 }
             }
         }
+        public static FileInfo? GetAllFile(string path, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) return null;
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            if (!directoryInfo.Exists) return null;
+            if (directoryInfo == null) return null;
+            var fileSystemInfos = directoryInfo.GetFileSystemInfos();
+            foreach (var item in fileSystemInfos)
+            {
+                if (item.Name.Contains(fileName))
+                {
+                    return item as FileInfo;
+                }
+                if (item.Attributes == FileAttributes.Directory)
+                {
+                    GetAllFile(item.FullName,fileName);
+                }
+              
+            }
+            return null;
+
+        }
+
+        public static Dictionary<string, string>? SearchFile(string path, string fileName)
+        {
+
+            var result =  GetAllFile( path, fileName);
+            if (result == null) return null;
+
+            Dictionary<string, string>? dictionary = new Dictionary<string, string>();
+            
+            dictionary["name"] = result.Name;
+            dictionary["fullPath"] = result.FullName;
+            dictionary["createTiem"] = result.CreationTime.ToString();
+            return dictionary;
+
+        }
     }
 }   
