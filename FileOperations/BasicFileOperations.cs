@@ -1,7 +1,9 @@
 ﻿using FileOperations.Enum;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-
+using System.Text;
+using Microsoft.VisualBasic.FileIO;
+using System.Reflection.Metadata;
 
 namespace FileOperations
 {
@@ -158,11 +160,27 @@ namespace FileOperations
 
         }
 
-        public static void modifyfileattribute(string path, FileAttributes fa)
+        public static void Modifyfileattribute(string path, FileAttributes fa)
         {
             FileInfo fileInfo = new FileInfo(path);
             fileInfo.Attributes = fa;
+        }
+        [DllImport("Kernel32.dll")]
+        public static extern Int16 GetShortPathName(string longN, StringBuilder shortN, Int16 buffer);
 
+        public static string GetShortName(string path)
+        {
+            StringBuilder shortName = new StringBuilder(256);
+            GetShortPathName(path, shortName, 256);
+            return shortName.ToString();
+        }
+        public static void RenameFile(string path,string newName)
+        {
+            FileSystem.RenameFile(path,newName);
+        }
+        public static void RenameDirectory(string path, string newName)
+        {
+            FileSystem.RenameDirectory(path, newName);
         }
     }
 }   

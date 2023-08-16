@@ -8,13 +8,9 @@ namespace CSharpDevelopmentExamples
         static void Main(string[] args)
         {
             List<string> list = new List<string>();
-            string path = @"C:\Users\Administrator\Desktop\book";
+            string path = @"C:\Users\Administrator\Desktop\book\ldy";
             Console.WriteLine(BasicFileOperations.GetLastWriteTime(@"C:\Users\Administrator\Desktop\book\C 开发实例大全(基础卷) .epub"));
-           var a =  BasicFileOperations.SearchFile(@"C:\Users\Administrator\Desktop\book\","1");
-            foreach (var item in a)
-            {
-
-            }
+            BasicFileOperations.RenameFile(path,"ldy.txt");
 
         }
     }
