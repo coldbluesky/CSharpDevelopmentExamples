@@ -1,6 +1,8 @@
 ﻿using FileOperations.Enum;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+
+
 namespace FileOperations
 {
     /// <summary>
@@ -47,7 +49,7 @@ namespace FileOperations
         {
             //FileInfo fileInfo = new FileInfo(path);
             //return fileInfo.Extension;
-           return Path.GetExtension(path);
+             return Path.GetExtension(path);
         }
 
         public static string GetCreateTime(string path)
@@ -107,9 +109,6 @@ namespace FileOperations
 
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
 
-            if (!directoryInfo.Exists) return;
-            if(directoryInfo==null) return;
-
             var fileSystemInfos = directoryInfo.GetFileSystemInfos();
             foreach (var item in fileSystemInfos)
             {
@@ -126,10 +125,8 @@ namespace FileOperations
         }
         public static FileInfo? GetAllFile(string path, string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) return null;
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
-            if (!directoryInfo.Exists) return null;
-            if (directoryInfo == null) return null;
+           
             var fileSystemInfos = directoryInfo.GetFileSystemInfos();
             foreach (var item in fileSystemInfos)
             {
@@ -152,13 +149,19 @@ namespace FileOperations
 
             var result =  GetAllFile( path, fileName);
             if (result == null) return null;
-
             Dictionary<string, string>? dictionary = new Dictionary<string, string>();
             
             dictionary["name"] = result.Name;
             dictionary["fullPath"] = result.FullName;
             dictionary["createTiem"] = result.CreationTime.ToString();
             return dictionary;
+
+        }
+
+        public static void modifyfileattribute(string path, FileAttributes fa)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            fileInfo.Attributes = fa;
 
         }
     }
