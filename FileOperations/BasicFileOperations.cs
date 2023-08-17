@@ -19,7 +19,9 @@ namespace FileOperations
         /// <param name="path"></param>
         /// <param name="eFileSize"></param>
         /// <returns></returns>
+        #region 获取文件属性
 
+        
         public static string GetFileSize(string path, EFileSize eFileSize = EFileSize.Kb)
         {
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -72,6 +74,18 @@ namespace FileOperations
             string result = new(Path.GetInvalidFileNameChars());
             return result;
         }
+        [DllImport("Kernel32.dll")]
+        public static extern Int16 GetShortPathName(string longN, StringBuilder shortN, Int16 buffer);
+
+        public static string GetShortName(string path)
+        {
+            StringBuilder shortName = new StringBuilder(256);
+            GetShortPathName(path, shortName, 256);
+            return shortName.ToString();
+        }
+        #endregion
+        #region 操作文件
+
 
         public static void CreateFile(string path)
         {
@@ -166,15 +180,7 @@ namespace FileOperations
             FileInfo fileInfo = new FileInfo(path);
             fileInfo.Attributes = fa;
         }
-        [DllImport("Kernel32.dll")]
-        public static extern Int16 GetShortPathName(string longN, StringBuilder shortN, Int16 buffer);
-
-        public static string GetShortName(string path)
-        {
-            StringBuilder shortName = new StringBuilder(256);
-            GetShortPathName(path, shortName, 256);
-            return shortName.ToString();
-        }
+      
         public static void RenameFile(string path, string newName)
         {
             FileSystem.RenameFile(path, newName);
@@ -187,15 +193,15 @@ namespace FileOperations
         public static void CopyFile(string fromFile, string toFile, int secSize)
         {
             using (File.Create(toFile)) { }
-            
+
             FileStream toFileOpen = new FileStream(toFile, FileMode.Append, FileAccess.Write);
-            FileStream fromFileOpen = new FileStream(fromFile,FileMode.Open,FileAccess.Read);
+            FileStream fromFileOpen = new FileStream(fromFile, FileMode.Open, FileAccess.Read);
             int fileSize;
-            if (fromFileOpen.Length>secSize)
+            if (fromFileOpen.Length > secSize)
             {
                 byte[] buffer = new byte[secSize];
                 int copied = 0;
-                while (copied <=(int)fromFileOpen.Length-secSize)
+                while (copied <= (int)fromFileOpen.Length - secSize)
                 {
                     //读取进buffer的长度
                     fileSize = fromFileOpen.Read(buffer, 0, secSize);
@@ -204,14 +210,14 @@ namespace FileOperations
                     fromFileOpen.Flush();
                     toFileOpen.Position = fromFileOpen.Position;
                     //记录已经复制的长度
-                    copied+=fileSize;
+                    copied += fileSize;
                 }
                 int left = (int)fromFileOpen.Length - copied;
                 fromFileOpen.Read(buffer, 0, left);
                 fromFileOpen.Flush();
                 toFileOpen.Write(buffer, 0, left);
                 fromFileOpen.Flush();
-
+                
             }
             else
             {
@@ -230,6 +236,47 @@ namespace FileOperations
 
         }
 
+
+        public static void CopyFiles(IEnumerable<string> fromFiles, string toFiles)
+        {
+            foreach (var fromFile in fromFiles)
+            {
+                CopyFile(fromFile, toFiles, 256);
+            }
+        }
+        #endregion
+        /*GetPrivateProfileString
+            lpAppName           表示INI文件内部根节点的值
+            lpKeyName           表示根节点下子标记的值
+            IpDefault           表示当标记值未设定或不存在时的默认值
+            lpReturnedString    表示返回读取节点的值
+            nSize               表示读取的节点内容的最大容量
+            lpFileName          表示文件的全路径
+        */
+        /*WritePrivateProfileString
+            mpAppName   表示INI文件内部根节点的值
+            mpKeyName   表示将要修改的标记名称
+            mpDefault   表示想要修改的内容
+            mpFileName  表示INI文件的全路径
+        */
+        #region 操作ini文件
+        [DllImport("kernel32.dll")]
+        public static extern int GetPrivateProfileString(string IpAppName,string lpKeyName,string IpDefault,
+            StringBuilder lpReturnedString, int nSize,string lpFileName);
+        [DllImport("kernel32.dll")]
+        public static extern long WritePrivateProfileString(string mpAppName,string mpKeyName, string mpDefault, string mpFileName);
+
+        public static string INIRead(string section,string key,string path)
+        {
+            StringBuilder stringBuilder = new StringBuilder(255);
+            GetPrivateProfileString(section,key,"", stringBuilder,255,path);
+            return stringBuilder.ToString();
+        }
+        public static void INIWrite(string section, string key,string value,string path)
+        {
+            WritePrivateProfileString(section,key,value,path);
+        }
+        #endregion
 
     }
 }
