@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualBasic.FileIO;
 using System.Reflection.Metadata;
+using System;
 
 namespace FileOperations
 {
     /// <summary>
     /// 文件基本操作
     /// </summary>
-    public static  class BasicFileOperations
+    public static class BasicFileOperations
     {
         /// <summary>
         /// 获取文件大小
@@ -18,7 +19,7 @@ namespace FileOperations
         /// <param name="path"></param>
         /// <param name="eFileSize"></param>
         /// <returns></returns>
-      
+
         public static string GetFileSize(string path, EFileSize eFileSize = EFileSize.Kb)
         {
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -34,7 +35,7 @@ namespace FileOperations
                     size = size / 1024 / 1024;
                     break;
                 case EFileSize.Gb:
-                    size = size / 1024 / 1024 / 1024;   
+                    size = size / 1024 / 1024 / 1024;
                     break;
                 default:
                     break;
@@ -43,15 +44,15 @@ namespace FileOperations
             {
                 return "请调整文件大小单位！";
             }
-           
-            return size.ToString("0.000")+ eFileSize.ToString();
+
+            return size.ToString("0.000") + eFileSize.ToString();
         }
 
         public static string GetFileExtensionName(string path)
         {
             //FileInfo fileInfo = new FileInfo(path);
             //return fileInfo.Extension;
-             return Path.GetExtension(path);
+            return Path.GetExtension(path);
         }
 
         public static string GetCreateTime(string path)
@@ -68,13 +69,13 @@ namespace FileOperations
 
         public static string GetInvalidFileNameChar()
         {
-            string result = new(Path.GetInvalidFileNameChars()) ;
+            string result = new(Path.GetInvalidFileNameChars());
             return result;
         }
 
         public static void CreateFile(string path)
         {
-            File.Create(path) ;
+            File.Create(path);
         }
 
         public static void DeleteFile(string path)
@@ -84,17 +85,17 @@ namespace FileOperations
 
         public static void Temp()
         {
-             
+
             FileInfo fileInfo = new FileInfo(Path.GetTempFileName());
             fileInfo.AppendText();
 
-        } 
+        }
         /// <summary>
         /// 根据当前时间创建文件夹
         /// </summary>
         public static void CreateFileByDateTime(string createPath)
         {
-            File.Create(createPath+@"/"+DateTime.Now.ToString("yyyyMMddhhmmss")+".txt");
+            File.Create(createPath + @"/" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".txt");
         }
 
         public static bool IsFileExist(string path)
@@ -114,9 +115,9 @@ namespace FileOperations
             var fileSystemInfos = directoryInfo.GetFileSystemInfos();
             foreach (var item in fileSystemInfos)
             {
-                if(item.Attributes == FileAttributes.Directory)
+                if (item.Attributes == FileAttributes.Directory)
                 {
-                    GetAllFiles(item.FullName,ref result);
+                    GetAllFiles(item.FullName, ref result);
                 }
                 else
                 {
@@ -128,7 +129,7 @@ namespace FileOperations
         public static FileInfo? GetAllFile(string path, string fileName)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
-           
+
             var fileSystemInfos = directoryInfo.GetFileSystemInfos();
             foreach (var item in fileSystemInfos)
             {
@@ -138,9 +139,9 @@ namespace FileOperations
                 }
                 if (item.Attributes == FileAttributes.Directory)
                 {
-                    GetAllFile(item.FullName,fileName);
+                    GetAllFile(item.FullName, fileName);
                 }
-              
+
             }
             return null;
 
@@ -149,10 +150,10 @@ namespace FileOperations
         public static Dictionary<string, string>? SearchFile(string path, string fileName)
         {
 
-            var result =  GetAllFile( path, fileName);
+            var result = GetAllFile(path, fileName);
             if (result == null) return null;
             Dictionary<string, string>? dictionary = new Dictionary<string, string>();
-            
+
             dictionary["name"] = result.Name;
             dictionary["fullPath"] = result.FullName;
             dictionary["createTiem"] = result.CreationTime.ToString();
@@ -174,13 +175,61 @@ namespace FileOperations
             GetShortPathName(path, shortName, 256);
             return shortName.ToString();
         }
-        public static void RenameFile(string path,string newName)
+        public static void RenameFile(string path, string newName)
         {
-            FileSystem.RenameFile(path,newName);
+            FileSystem.RenameFile(path, newName);
         }
         public static void RenameDirectory(string path, string newName)
         {
             FileSystem.RenameDirectory(path, newName);
         }
+
+        public static void CopyFile(string fromFile, string toFile, int secSize)
+        {
+            using (File.Create(toFile)) { }
+            
+            FileStream toFileOpen = new FileStream(toFile, FileMode.Append, FileAccess.Write);
+            FileStream fromFileOpen = new FileStream(fromFile,FileMode.Open,FileAccess.Read);
+            int fileSize;
+            if (fromFileOpen.Length>secSize)
+            {
+                byte[] buffer = new byte[secSize];
+                int copied = 0;
+                while (copied <=(int)fromFileOpen.Length-secSize)
+                {
+                    //读取进buffer的长度
+                    fileSize = fromFileOpen.Read(buffer, 0, secSize);
+                    fromFileOpen.Flush();
+                    toFileOpen.Write(buffer, 0, secSize);
+                    fromFileOpen.Flush();
+                    toFileOpen.Position = fromFileOpen.Position;
+                    //记录已经复制的长度
+                    copied+=fileSize;
+                }
+                int left = (int)fromFileOpen.Length - copied;
+                fromFileOpen.Read(buffer, 0, left);
+                fromFileOpen.Flush();
+                toFileOpen.Write(buffer, 0, left);
+                fromFileOpen.Flush();
+
+            }
+            else
+            {
+                byte[] buffer = new byte[fromFileOpen.Length];
+
+                fromFileOpen.Read(buffer, 0, (int)fromFileOpen.Length);
+                fromFileOpen.Flush();
+                toFileOpen.Write(buffer, 0, (int)fromFileOpen.Length);
+                fromFileOpen.Flush();
+            }
+
+            toFileOpen.Close();
+            toFileOpen.Dispose();
+            fromFileOpen.Close();
+            fromFileOpen.Dispose();
+
+        }
+
+
     }
-}   
+}
