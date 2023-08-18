@@ -5,6 +5,9 @@ using System.Text;
 using Microsoft.VisualBasic.FileIO;
 using System.Reflection.Metadata;
 using System;
+using System.Linq;
+using System.Data;
+using System.Xml.Linq;
 
 namespace FileOperations
 {
@@ -275,6 +278,23 @@ namespace FileOperations
         public static void INIWrite(string section, string key,string value,string path)
         {
             WritePrivateProfileString(section,key,value,path);
+        }
+        #endregion
+        #region 操作XML文件
+        public static DataSet? LoadXml(string path)
+        {
+            if (File.Exists(path))
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(path);
+                return ds;
+            }
+
+            return null;
+        }
+        public static void CreatXml(string path)
+        {
+            XDocument xDocument = new XDocument(new XDeclaration("1","utf-8","yes")) ;
         }
         #endregion
 
