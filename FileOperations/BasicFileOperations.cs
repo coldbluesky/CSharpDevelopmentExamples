@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using System.Data;
 using System.Xml.Linq;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace FileOperations
 {
@@ -24,7 +26,7 @@ namespace FileOperations
         /// <returns></returns>
         #region 获取文件属性
 
-        
+
         public static string GetFileSize(string path, EFileSize eFileSize = EFileSize.Kb)
         {
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -87,6 +89,7 @@ namespace FileOperations
             return shortName.ToString();
         }
         #endregion
+
         #region 操作文件
 
 
@@ -183,7 +186,7 @@ namespace FileOperations
             FileInfo fileInfo = new FileInfo(path);
             fileInfo.Attributes = fa;
         }
-      
+
         public static void RenameFile(string path, string newName)
         {
             FileSystem.RenameFile(path, newName);
@@ -220,7 +223,7 @@ namespace FileOperations
                 fromFileOpen.Flush();
                 toFileOpen.Write(buffer, 0, left);
                 fromFileOpen.Flush();
-                
+
             }
             else
             {
@@ -263,40 +266,61 @@ namespace FileOperations
             mpFileName  表示INI文件的全路径
         */
         #region 操作ini文件
+        //引入外部dll，定义的方法名必须跟dll里的一致否则报错;
+        //方法的参数个数必须一致，否则无效;
+        //参数名字可以不一致
         [DllImport("kernel32.dll")]
-        public static extern int GetPrivateProfileString(string IpAppName,string lpKeyName,string IpDefault,
-            StringBuilder lpReturnedString, int nSize,string lpFileName);
+        public static extern int GetPrivateProfileString(string IAppName, string lpKeyName, string IpDefault,
+            StringBuilder lpReturnedString, int nSize, string lpFileName);
         [DllImport("kernel32.dll")]
-        public static extern long WritePrivateProfileString(string mpAppName,string mpKeyName, string mpDefault, string mpFileName);
+        public static extern long WritePrivateProfileString(string mpAppName, string mpKeyName, string mpDefault, string mpFileName);
 
-        public static string INIRead(string section,string key,string path)
+        public static string INIRead(string section, string key, string path)
         {
             StringBuilder stringBuilder = new StringBuilder(255);
-            GetPrivateProfileString(section,key,"", stringBuilder,255,path);
+            GetPrivateProfileString(section, key, "", stringBuilder, 255, path);
             return stringBuilder.ToString();
         }
-        public static void INIWrite(string section, string key,string value,string path)
+        public static void INIWrite(string section, string key, string value, string path)
         {
-            WritePrivateProfileString(section,key,value,path);
+            WritePrivateProfileString(section, key, value, path);
         }
         #endregion
+
         #region 操作XML文件
         public static DataSet? LoadXml(string path)
         {
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
-                DataSet ds = new DataSet();
-                ds.ReadXml(path);
-                return ds;
+                return null;
             }
 
-            return null;
+            DataSet ds = new DataSet();
+            ds.ReadXml(path);
+            return ds;
         }
-        public static void CreatXml(string path)
+        public static void CreateXml(string path)
         {
-            XDocument xDocument = new XDocument(new XDeclaration("1","utf-8","yes")) ;
+            string defaultName = "default.xml";
+            //创建xml文件如果不添加顶级节点，就会报错
+            XDocument xDocument = new XDocument(new XDeclaration("1", "utf-8", "yes"), new XElement("root"));
+            xDocument.Save(path + @"\" + defaultName);
+        }
+        public static void AddElementUnderRoot(string path)
+        {
+            XElement xe = XElement.Load(path);
+            XElement p = new XElement("people", new XAttribute("ID", "2"));
+            xe.Add(p);
+            xe.Save(path);
+            
+        }
+
+        public static void AddElement(string path,string nodeName)
+        {
+            XmlDocument
+            XElement xe = XElement.Load(path);
+            
         }
         #endregion
-
     }
 }
