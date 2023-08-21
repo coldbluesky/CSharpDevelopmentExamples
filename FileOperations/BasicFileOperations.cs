@@ -9,7 +9,7 @@ using System.Linq;
 using System.Data;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using System.Xml;
+using System.IO;
 
 namespace FileOperations
 {
@@ -88,6 +88,11 @@ namespace FileOperations
             GetShortPathName(path, shortName, 256);
             return shortName.ToString();
         }
+
+        //public static bool IsAvailable()
+        //{
+        //    isf
+        //}
         #endregion
 
         #region 操作文件
@@ -315,12 +320,28 @@ namespace FileOperations
             
         }
 
-        public static void AddElement(string path,string nodeName)
+        public static void AddElementByAttribute(string path)
         {
-            XmlDocument
             XElement xe = XElement.Load(path);
-            
+           
+            XElement x = xe.Elements("people").Where(a => a.Attribute("ID").Value == "1").FirstOrDefault();
+            x.Add(new XElement("name",new XAttribute("ID",3),"zhangsan"));
+            xe.Save(path);
         }
+        #endregion
+
+        #region 其他
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindow(IntPtr handle,int ucmd);
+        [DllImport("user32.dll")]
+        private static extern int GetWindowText(IntPtr handle,StringBuilder text, int MaxCount);
+        //public static void GetWindowText()
+        //{
+        //    StringBuilder stringBuilder = new StringBuilder(2560);
+        //    IntPtr currentHandle = GetWindow(this.Handle,GW_HWNDNEXT);
+        //    int v = GetWindowText(currentHandle, stringBuilder,2560);
+        //    return stringBuilder.ToString();
+        //}
         #endregion
     }
 }
