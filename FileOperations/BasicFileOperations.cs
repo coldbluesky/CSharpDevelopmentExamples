@@ -89,10 +89,21 @@ namespace FileOperations
             return shortName.ToString();
         }
 
-        //public static bool IsAvailable()
-        //{
-        //    isf
-        //}
+        public static bool IsFileAvailable(string path)
+        {
+            try
+            {
+                using FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
         #endregion
 
         #region 操作文件
@@ -317,31 +328,93 @@ namespace FileOperations
             XElement p = new XElement("people", new XAttribute("ID", "2"));
             xe.Add(p);
             xe.Save(path);
-            
+
         }
 
         public static void AddElementByAttribute(string path)
         {
             XElement xe = XElement.Load(path);
-           
+
             XElement x = xe.Elements("people").Where(a => a.Attribute("ID").Value == "1").FirstOrDefault();
-            x.Add(new XElement("name",new XAttribute("ID",3),"zhangsan"));
+            x.Add(new XElement("name", new XAttribute("ID", 3), "zhangsan"));
             xe.Save(path);
         }
         #endregion
 
         #region 其他
         [DllImport("user32.dll")]
-        private static extern IntPtr GetWindow(IntPtr handle,int ucmd);
+        private static extern IntPtr GetWindow(IntPtr handle, int ucmd);
         [DllImport("user32.dll")]
-        private static extern int GetWindowText(IntPtr handle,StringBuilder text, int MaxCount);
+        private static extern int GetWindowText(IntPtr handle, StringBuilder text, int MaxCount);
         //public static void GetWindowText()
         //{
         //    StringBuilder stringBuilder = new StringBuilder(2560);
-        //    IntPtr currentHandle = GetWindow(this.Handle,GW_HWNDNEXT);
-        //    int v = GetWindowText(currentHandle, stringBuilder,2560);
+        //    IntPtr currentHandle = GetWindow(this.Handle, GW_HWNDNEXT);
+        //    int v = GetWindowText(currentHandle, stringBuilder, 2560);
         //    return stringBuilder.ToString();
         //}
+
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path">文件的详细路径</param>
+        /// <param name="fileAttribute">一个或多个文件属性标志的结合，但是如果该函数的最后一个参数uFlags不包括dwFileAttributeSHGFI USEFILEATTRIBUTES标志，则该参数被忽略</param>
+        /// <param name="psfi">文件信息（用SHFILEINFO结构保存）</param>
+        /// <param name="sizeFileInfo">通过参数psf指向SHFILEINFO结构的大小，以字节表示</param>
+        /// <param name="flags"> N个标志参数的结合</param>
+        /// 返回值          取决于参数uFlags
+        /// <returns></returns>
+        [DllImport("shell32.dll")]
+        public static extern IntPtr SHGetFileInfo(string path, uint fileAttribute, ref SHFILEINFO psfi, uint sizeFileInfo, uint flags);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file">定义可获取图标的可执行文件、DLL,或者图标文件的名字的空结束字符串指针</param>
+        /// <param name="nIconIndex">指定抽取第一个图标基于零的指针</param>
+        /// <param name="phIconLarge">指向图标句柄数组的指针，它可接收从文件获取的大图标的句柄。如果该参数是NULL,没有phiconLarge</param>
+        /// <param name="phIconSmall">指向图标句柄数组的指针，它可接收从文件获取的小图标的句柄。如果该参数是NULL,没有phIconSmall</param>
+        /// <param name="nIcons">指定要从文件中抽取图标的数目</param>
+        /// 返回值:如果nIconIndex参数是-l,PhiconLarge和PhiconSmall参数是NULL,返回值是包含在指定文件中的图标数目：否则，返回值是成功地从文件中获取图标的数目
+        /// <returns></returns>
+        [DllImport("shell32.dll")]
+        public static extern IntPtr ExtractIconEx(string file, int nIconIndex, int[] phIconLarge, int[] phIconSmall, uint nIcons);
+        public struct SHFILEINFO
+        {
+            public IntPtr hIcon;
+            public IntPtr iIcon;
+            public uint dwAttributes;
+            public string displayName;
+            public string typeName; 
+        }
+        /// <summary>
+        /// 获取文件夹下所有文件及其子文件的Icon；如果路径是文件，则返回该文件icon
+        /// </summary>
+        public static void GetFileIcons(string path)
+        {
+            try
+            {
+                SHFILEINFO sHFILEINFO = new SHFILEINFO();
+                if (Directory.Exists(path))
+                {
+                    //文件夹校验
+                    //if(!(dir.name!="System Volume Information"| dir.name != "RECYCLER"| dir.name.ToLower() != "recycled " ))
+
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
         #endregion
+
     }
 }

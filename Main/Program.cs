@@ -11,7 +11,7 @@ namespace CSharpDevelopmentExamples
             string path = @"C:\Users\Administrator\Desktop\book\config.ini";
             Console.WriteLine(BasicFileOperations.INIRead("server", "RemotelP", path));
             //BasicFileOperations.CreateXml(@"C:\Users\Administrator\Desktop");
-            BasicFileOperations.AddElementByAttribute(@"C:\Users\Administrator\Desktop\default.xml");
+            Console.WriteLine(BasicFileOperations.IsFileAvailable(@"‪C:\Users\Administrator\Desktop\book\config.ini")); 
         }
     }
 }
