@@ -380,14 +380,9 @@ namespace FileOperations
         /// <returns></returns>
         [DllImport("shell32.dll")]
         public static extern IntPtr ExtractIconEx(string file, int nIconIndex, int[] phIconLarge, int[] phIconSmall, uint nIcons);
-        public struct SHFILEINFO
-        {
-            public IntPtr hIcon;
-            public IntPtr iIcon;
-            public uint dwAttributes;
-            public string displayName;
-            public string typeName; 
-        }
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+         public static extern  bool DestroyIcon(IntPtr handle);
+       
         /// <summary>
         /// 获取文件夹下所有文件及其子文件的Icon；如果路径是文件，则返回该文件icon
         /// </summary>
@@ -396,26 +391,25 @@ namespace FileOperations
             try
             {
                 List<IconInfoModel> list = new List<IconInfoModel>();
-                SHFILEINFO sHFILEINFO = new SHFILEINFO();
                 string[] dirs = Directory.GetDirectories(path);
                 string[] files = Directory.GetFiles(path);
-                List<object[]> objects = new List<object[]>();
                 //获取文件夹图标
                 for (int i = 0; i < dirs.Length; i++)
                 {
                     
                     DirectoryInfo directoryInfo = new DirectoryInfo(dirs[i]);
+                    SHFILEINFO sh = new SHFILEINFO();
+
                     //文件夹校验
                     //if(!(dir.name!="System Volume Information"| dir.name != "RECYCLER"| dir.name.ToLower() != "recycled " ))
-                    SHGetFileInfo(dirs[i], (uint)0x80, ref sHFILEINFO, (uint)System.Runtime.InteropServices.Marshal.SizeOf(sHFILEINFO), (uint)(0x100 | 0x400));
+                    SHGetFileInfo(dirs[i], (uint)0x80, ref sh, (uint)System.Runtime.InteropServices.Marshal.SizeOf(sh), (uint)(0x100 | 0x400));
                     list.Add(new IconInfoModel
                     {
                         Name = directoryInfo.Name,
                         Size = "",
                         Type = "文件夹",
                         LastWriteTime = directoryInfo.LastWriteTime,
-                        HIcon = sHFILEINFO.hIcon,
-                        IIcon = sHFILEINFO.iIcon,
+                        sHFILEINFO = sh,
                         
                     });
                    
@@ -424,18 +418,19 @@ namespace FileOperations
                 //获取文件图标
                 for (int i = 0; i < files.Length; i++)
                 {
+                    SHFILEINFO sh = new SHFILEINFO();
+
                     FileInfo fileInfo = new FileInfo(files[i]);
-                    SHGetFileInfo(files[i], (uint)0x80, ref sHFILEINFO, (uint)System.Runtime.InteropServices.Marshal.SizeOf(sHFILEINFO), (uint)(0x100 | 0x400));
+                    SHGetFileInfo(files[i], (uint)0x80, ref sh, (uint)System.Runtime.InteropServices.Marshal.SizeOf(sh), (uint)(0x100 | 0x400));
                     list.Add(new IconInfoModel
                     {
                         Name = fileInfo.Name,
                         Size = GetFileSize(fileInfo.FullName),
-                        Type = "文件夹",
+                        Type = "文件",
                         LastWriteTime = fileInfo.LastWriteTime,
-                        HIcon = sHFILEINFO.hIcon,
-                        IIcon = sHFILEINFO.iIcon,
+                        sHFILEINFO = sh
 
-                    });
+                    }); 
 
                 }
 

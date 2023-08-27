@@ -1,0 +1,43 @@
+﻿<Window
+    x:Class="WpfTest.GetIconTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="GetIconTest"
+    Width="800"
+    Height="450"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:IconConverter x:Key="IC"/>
+    </Window.Resources>
+    <Grid>
+        <ItemsControl x:Name="bb" ItemsSource="{Binding}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding sHFILEINFO.iIcon,Converter={StaticResource IC}}" />
+                        <Image Source="{Binding sHFILEINFO.hIcon,Converter={StaticResource IC}}"  Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding Name}" Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding Size}"  Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding LastWriteTime}"  Margin="10,0,0,0"/>
+
+
+
+                        <TextBlock />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        
+        <StackPanel Orientation="Vertical"></StackPanel>
+    </Grid>
+</Window>
