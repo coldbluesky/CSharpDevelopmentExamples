@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EfficientOffice\EfficientOffice.csproj" />
     <ProjectReference Include="..\FileOperations\FileOperations.csproj" />
   </ItemGroup>
 
