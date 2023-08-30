@@ -31,6 +31,10 @@ namespace FileOperations
 
         public static string GetFileSize(string path, EFileSize eFileSize = EFileSize.Kb)
         {
+            const int KB = 1024;
+            const int MB = 1024 * 1024;
+            const int GB = 1024 * 1024 * 1024;
+            string err = "请调整单位大小！";
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             double size = Convert.ToDouble(fs.Length);
             switch (eFileSize)
@@ -38,22 +42,41 @@ namespace FileOperations
                 case EFileSize.Byte:
                     return size.ToString();
                 case EFileSize.Kb:
-                    size = size / 1024;
+                    if (size / KB >= 1)
+                    {
+                        size /= KB;
+                    }
+                    else
+                    {
+                        return err;
+                    }
                     break;
                 case EFileSize.Mb:
-                    size = size / 1024 / 1024;
+                    if (size / KB >= 1)
+                    {
+
+                        size /= MB;
+                    }
+                    else
+                    {
+                        return err;
+                    }
                     break;
                 case EFileSize.Gb:
-                    size = size / 1024 / 1024 / 1024;
+                    if (size / KB >= 1)
+                    {
+
+                        size /= GB;
+                    }
+                    else
+                    {
+                        return err;
+                    }
                     break;
                 default:
                     break;
             }
-            if (size < 0.001)
-            {
-                return "请调整文件大小单位！";
-            }
-
+       
             return size.ToString("0.000") + eFileSize.ToString();
         }
 
@@ -516,12 +539,12 @@ namespace FileOperations
         {
             try
             {
-                string[] files = Directory.GetFiles(path, "",System.IO.SearchOption.TopDirectoryOnly);
-                FileStream outputFileStream = new FileStream(outputPath, FileMode.Append,FileAccess.Write);
+                string[] files = Directory.GetFiles(path, "", System.IO.SearchOption.TopDirectoryOnly);
+                FileStream outputFileStream = new FileStream(outputPath, FileMode.Append, FileAccess.Write);
                 BinaryWriter writer = new BinaryWriter(outputFileStream);
                 for (int i = 0; i < files.Length; i++)
                 {
-                    FileStream fs = new FileStream(files[i],FileMode.Open);
+                    FileStream fs = new FileStream(files[i], FileMode.Open);
                     BinaryReader reader = new BinaryReader(fs);
                     writer.Write(reader.ReadBytes((int)fs.Length));
                     reader.Close();
@@ -533,7 +556,7 @@ namespace FileOperations
             catch (Exception)
             {
 
-                throw;
+                return false;
             }
         }
         #endregion
