@@ -27,7 +27,7 @@ namespace WpfTest
             InitializeComponent();
             var a = BasicFileOperations.GetFileIcons(@"C:\Users\Administrator\Desktop\book");
             this.DataContext = a;
-            //bb.ItemsSource = a;
+
         }
     }
 

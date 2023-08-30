@@ -9,6 +9,7 @@
     <Grid>
         <WrapPanel>
             <Button Content="获取文件图标" Click="GetFileIcon_Click" Width="auto" Height="30"/>
+            <Image x:Name="img"></Image>
         </WrapPanel>
     </Grid>
 </Window>

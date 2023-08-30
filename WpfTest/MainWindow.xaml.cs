@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FileOperations;
+using System.Windows.Interop;
 
 namespace WpfTest
 {
@@ -23,6 +26,7 @@ namespace WpfTest
         public MainWindow()
         {
             InitializeComponent();
+          
         }
 
       
@@ -31,6 +35,8 @@ namespace WpfTest
         {
             GetIconTest getIconTest = new GetIconTest();
             getIconTest.ShowDialog();
+           
+
         }
     }
 }

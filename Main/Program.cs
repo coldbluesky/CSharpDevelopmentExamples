@@ -1,5 +1,6 @@
 ﻿
 using FileOperations;
+using FileOperations.Enum;
 
 namespace CSharpDevelopmentExamples
 {
@@ -11,7 +12,8 @@ namespace CSharpDevelopmentExamples
             string path = @"C:\Users\Administrator\Desktop\book";
             Console.WriteLine(BasicFileOperations.INIRead("server", "RemotelP", path));
             //BasicFileOperations.CreateXml(@"C:\Users\Administrator\Desktop");
-            var a =   BasicFileOperations.GetFileIcons(path);
+            Console.WriteLine(BasicFileOperations.FileCommuniteUnite(@"C:\Users\Administrator\Desktop\book\新建文件夹", @"C:\Users\Administrator\Desktop\book\新建文件夹\new.pdf"));
+
         }
     }
 }

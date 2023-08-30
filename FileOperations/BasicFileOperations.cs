@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.VisualBasic.FileIO;
 using System.Reflection.Metadata;
 using System;
 using System.Linq;
@@ -11,6 +10,8 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.IO;
 using FileOperations.Model;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.VisualBasic.FileIO;
 
 namespace FileOperations
 {
@@ -355,7 +356,7 @@ namespace FileOperations
         //    return stringBuilder.ToString();
         //}
 
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -381,8 +382,8 @@ namespace FileOperations
         [DllImport("shell32.dll")]
         public static extern IntPtr ExtractIconEx(string file, int nIconIndex, int[] phIconLarge, int[] phIconSmall, uint nIcons);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-         public static extern  bool DestroyIcon(IntPtr handle);
-       
+        public static extern bool DestroyIcon(IntPtr handle);
+
         /// <summary>
         /// 获取文件夹下所有文件及其子文件的Icon；如果路径是文件，则返回该文件icon
         /// </summary>
@@ -396,7 +397,7 @@ namespace FileOperations
                 //获取文件夹图标
                 for (int i = 0; i < dirs.Length; i++)
                 {
-                    
+
                     DirectoryInfo directoryInfo = new DirectoryInfo(dirs[i]);
                     SHFILEINFO sh = new SHFILEINFO();
 
@@ -410,9 +411,8 @@ namespace FileOperations
                         Type = "文件夹",
                         LastWriteTime = directoryInfo.LastWriteTime,
                         sHFILEINFO = sh,
-                        
+
                     });
-                   
 
                 }
                 //获取文件图标
@@ -430,7 +430,7 @@ namespace FileOperations
                         LastWriteTime = fileInfo.LastWriteTime,
                         sHFILEINFO = sh
 
-                    }); 
+                    });
 
                 }
 
@@ -440,9 +440,101 @@ namespace FileOperations
             catch (Exception)
             {
 
-                throw ;
+                throw;
             }
-           
+
+        }
+        /// <summary>
+        /// 文件分割
+        /// </summary>
+        /// <param name="storagePath">分割文件保存路径</param>
+        /// <param name="file">要分割的文件</param>
+        /// <param name="unit">分割单位</param>
+        /// <param name="splitSize">分割大小,字节数量</param>
+        /// <param name=""></param>
+        public static bool FileSplit(string file, string storagePath, EFileSize unit, int splitSize)
+        {
+            int splitFileSize = 0;
+            switch (unit)
+            {
+                case EFileSize.Byte:
+                    splitFileSize = splitSize;
+                    break;
+                case EFileSize.Kb:
+                    splitFileSize = splitSize * 1024;
+                    break;
+                case EFileSize.Mb:
+                    splitFileSize = splitSize * 1024 * 1024;
+                    break;
+                case EFileSize.Gb:
+                    splitFileSize = splitSize * 1024 * 1024 * 1024;
+                    break;
+                default:
+                    break;
+            }
+            /*
+             *FileStream打开文件
+             *创建BinaryReader
+             *循环<=fileConut
+             */
+            FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
+            //最少分割两个部分
+            if ((fileStream.Length / splitFileSize) < 1) return false;
+            int splitFileCount = (int)(fileStream.Length / splitFileSize);
+            //文件总字节数对分割文件总字节数取余不为0，则文件数加一
+            if ((fileStream.Length % splitFileSize) != 0) splitFileCount++;
+            BinaryReader bReader = new BinaryReader(fileStream);
+            string[] TempExtra = file.Split('.');
+            try
+            {
+                for (int i = 0; i < splitFileCount; i++)
+                {
+                    //分割小文件名
+                    string spliteFileName = storagePath + @"/" + i.ToString().PadLeft(4, '0') + "." + TempExtra[TempExtra.Length - 1];
+                    FileStream fs = new FileStream(spliteFileName, FileMode.Create);
+                    BinaryWriter bWriter = new BinaryWriter(fs);
+                    bWriter.Write(bReader.ReadBytes(splitFileSize));
+                    fs.Close();
+                    bWriter.Close();
+                }
+                fileStream.Close();
+                bReader.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 小文件合并
+        /// </summary>
+        /// <param name="path">要合并的小文件集合的文件夹</param>
+        /// <param name="outputPath">合并成功文件的输出路径</param>
+        /// <returns></returns>
+        public static bool FileCommuniteUnite(string path, string outputPath)
+        {
+            try
+            {
+                string[] files = Directory.GetFiles(path, "",System.IO.SearchOption.TopDirectoryOnly);
+                FileStream outputFileStream = new FileStream(outputPath, FileMode.Append,FileAccess.Write);
+                BinaryWriter writer = new BinaryWriter(outputFileStream);
+                for (int i = 0; i < files.Length; i++)
+                {
+                    FileStream fs = new FileStream(files[i],FileMode.Open);
+                    BinaryReader reader = new BinaryReader(fs);
+                    writer.Write(reader.ReadBytes((int)fs.Length));
+                    reader.Close();
+                }
+                outputFileStream.Close();
+                writer.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         #endregion
 
