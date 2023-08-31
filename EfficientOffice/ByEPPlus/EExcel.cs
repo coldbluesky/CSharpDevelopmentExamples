@@ -27,7 +27,6 @@ namespace EfficientOffice.ByEPPlus
         public static void SetLicenseContext()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
         }
 
         public static void CreateEmpty(string path)
