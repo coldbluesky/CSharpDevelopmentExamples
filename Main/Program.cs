@@ -9,8 +9,7 @@ namespace CSharpDevelopmentExamples
         static void Main(string[] args)
         {
             string path = @"C:\Users\Administrator\Desktop\book";
-            //EExcel.CreateEmpty(path);
-            EExcel.ClearPassword(Path.Combine(path,"empty.xlsx"),"234");
+            EExcel.DeleteWorksheet(Path.Combine(path,"empty.xlsx"),"sheet1");
 
         }
     }

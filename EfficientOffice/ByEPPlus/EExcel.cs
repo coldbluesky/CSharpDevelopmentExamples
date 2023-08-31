@@ -50,6 +50,12 @@ namespace EfficientOffice.ByEPPlus
                 package.Save(pwd);
             }
         }
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="newPwd"></param>
+        /// <param name="oldPwd"></param>
         public static void SetPassword(string path, string newPwd, string oldPwd)
         {
             using (var package = EInstance(path,oldPwd))
@@ -66,6 +72,38 @@ namespace EfficientOffice.ByEPPlus
                 package.Save();
             }
         }
+
+        public static void AddBatchWorksheets(string path, int sheetNum)
+        {
+            using (var package = EInstance(path))
+            {
+                for (int i = 0; i < sheetNum; i++)
+                {
+                    try
+                    {
+                        package.Workbook.Worksheets.Add($"sheet{i + 1}");
+
+                    }
+                    catch (Exception)
+                    {
+
+                        continue;
+                    }
+                }
+                package.Save();
+            }
+        }
+        public static void DeleteWorksheet(string path, string sheetName)
+        {
+            using (var package = EInstance(path))
+            {
+                package.Workbook.Worksheets.Delete(sheetName);
+                package.Save();
+
+            }
+        }
+
+       
     }
 
 }
