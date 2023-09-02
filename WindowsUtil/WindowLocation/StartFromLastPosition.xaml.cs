@@ -10,28 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WindowsUtil.WindowLocation;
+using Microsoft.Win32;
+using FileOperations;
 
-namespace WindowsUtil
+namespace WindowsUtil.WindowLocation
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// 
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StartFromLastPosition : Window
     {
-        public MainWindow()
+        public StartFromLastPosition()
         {
             InitializeComponent();
             
         }
 
-        private void SetLocationClick(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            SetLocation w = new SetLocation();
-            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.ShowDialog();
+
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {   
+           
         }
     }
 }

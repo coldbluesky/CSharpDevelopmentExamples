@@ -7,7 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="WindowLocation\SetLocation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WindowLocation\StartFromLastPosition.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowLocation\SetLocation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowLocation\StartFromLastPosition.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -8,8 +8,8 @@ namespace CSharpDevelopmentExamples
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Administrator\Desktop\book";
-            EExcel.DeleteWorksheet(Path.Combine(path,"empty.xlsx"),"sheet1");
+            string path = @"C:\Users\Administrator\Desktop\book\s.ini";
+            BasicFileOperations.INIWrite("zhangsan","age","18",path); 
 
         }
     }

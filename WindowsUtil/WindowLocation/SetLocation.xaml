@@ -1,0 +1,28 @@
+﻿<Window
+    x:Class="WindowsUtil.WindowLocation.SetLocation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WindowsUtil.WindowLocation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="80"
+    d:DesignWidth="200"
+    Background="White"
+    FontSize="12"
+    Top="{Binding ElementName=topSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+    Left="{Binding ElementName=leftSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Margin="10" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="左边距 " />
+                <Slider x:Name="leftSlider" Maximum="1000" Width="100"/>
+            </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock Text="上边距 " />
+                <Slider x:Name="topSlider" Maximum="1000" Width="100"  />
+            </StackPanel>
+            <Button Content="确定" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

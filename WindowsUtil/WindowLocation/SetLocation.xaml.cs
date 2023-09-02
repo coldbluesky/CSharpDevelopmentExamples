@@ -12,26 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WindowsUtil.WindowLocation;
 
-namespace WindowsUtil
+namespace WindowsUtil.WindowLocation
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// SetLocation.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SetLocation : Window
     {
-        public MainWindow()
+        public SetLocation()
         {
             InitializeComponent();
-            
+           
         }
 
-        private void SetLocationClick(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SetLocation w = new SetLocation();
-            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.ShowDialog();
+            Top = Convert.ToInt32(topSlider.Value);
+            Left = Convert.ToInt32(leftSlider.Value);
         }
     }
 }

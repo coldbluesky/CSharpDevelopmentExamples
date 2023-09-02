@@ -12,6 +12,7 @@ using System.IO;
 using FileOperations.Model;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic.FileIO;
+using System.Text.RegularExpressions;
 
 namespace FileOperations
 {
@@ -325,6 +326,38 @@ namespace FileOperations
         public static void INIWrite(string section, string key, string value, string path)
         {
             WritePrivateProfileString(section, key, value, path);
+        }
+        /// <summary>
+        /// 在当前工作目录创建ini文件
+        /// </summary>
+        /// <param name="name"></param>
+        public static void INICreate(string name = "setting.ini")
+        {
+            string path = Path.Combine(Environment.CurrentDirectory,name);
+            File.Create(path);
+        }   
+        /// <summary>
+        /// 利用SteamReader，StreamWriter对文件进行覆写，性能低下
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="sect"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public static void INIAddNodeBySection(string path,string sect,string key,string value)
+        {
+            //读取ini文件
+            StreamReader sr = File.OpenText(path);
+            string content = sr.ReadToEnd();
+
+            //匹配section
+            var sectionRegex = new Regex(@$"\[{sect}\][\s\S]*?(?=\[|\z)");
+            var sectionContent = sectionRegex.Match(content).Value;
+            sectionContent += $"\r{key}={value}\r";
+            var newContent = sectionRegex.Replace(content,sectionContent);
+            sr.Close();
+            StreamWriter sw = File.CreateText(path);
+            sw.Write(newContent);
+            sw.Close();
         }
         #endregion
 
