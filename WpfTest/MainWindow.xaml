@@ -10,6 +10,8 @@
         <WrapPanel>
             <Button Content="获取文件图标" Click="GetFileIcon_Click" Width="auto" Height="30"/>
             <Image x:Name="img"></Image>
+            <RadioButton>开启</RadioButton>
+            <RadioButton>关闭</RadioButton>
         </WrapPanel>
     </Grid>
 </Window>

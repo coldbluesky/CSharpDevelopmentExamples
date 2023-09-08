@@ -334,7 +334,10 @@ namespace FileOperations
         public static void INICreate(string name = "setting.ini")
         {
             string path = Path.Combine(Environment.CurrentDirectory,name);
-            File.Create(path);
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
         }   
         /// <summary>
         /// 利用SteamReader，StreamWriter对文件进行覆写，性能低下

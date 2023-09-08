@@ -24,12 +24,18 @@ namespace WindowsUtil
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void SetLocationClick(object sender, RoutedEventArgs e)
         {
             SetLocation w = new SetLocation();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            w.ShowDialog();
+        }
+
+        private void StartFormLastLocationClick(object sender, RoutedEventArgs e)
+        {
+            StartFromLastPosition w = new StartFromLastPosition();
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             w.ShowDialog();
         }
