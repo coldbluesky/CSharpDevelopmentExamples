@@ -1,3 +1,15 @@
 **/bin
 **/obj
 **/.vs
+/WpfApp1/App.config
+/WpfApp1/App.xaml
+/WpfApp1/App.xaml.cs
+/WpfApp1/MainWindow.xaml
+/WpfApp1/MainWindow.xaml.cs
+/WpfApp1/Properties/AssemblyInfo.cs
+/WpfApp1/Properties/Resources.Designer.cs
+/WpfApp1/Properties/Resources.resx
+/WpfApp1/Properties/Settings.Designer.cs
+/WpfApp1/Properties/Settings.settings
+/WpfTest/MainWindow.xaml
+/WpfTest/MainWindow.xaml.cs

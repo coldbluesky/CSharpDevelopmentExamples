@@ -26,6 +26,16 @@
                 Margin="10,10,0,0"
                 Click="StartFormLastLocationClick"
                 Content="从上次位置打开" />
+            <Button
+                Height="30"
+                Margin="10,10,0,0"
+                Click="AlwaysTopShowClick"
+                Content="窗口始终最上层" />
+            <Button
+                Height="30"
+                Margin="10,10,0,0"
+                Click="SetSizeByDeskClick"
+                Content="根据桌面大小设置窗口大小" />
         </WrapPanel>
     </Grid>
 </Window>

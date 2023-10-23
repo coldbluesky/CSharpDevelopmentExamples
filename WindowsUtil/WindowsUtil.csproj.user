@@ -7,21 +7,39 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="WindowLocation\SetLocation.xaml.cs">
+    <Compile Update="Base\AlwaysTopShow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="WindowLocation\StartFromLastPosition.xaml.cs">
+    <Compile Update="Base\CostumStateTool.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Base\SetLocation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Base\SetSizeByDesk.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Base\StartFromLastPosition.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Base\CostumStateTool.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WindowLocation\SetLocation.xaml">
+    <Page Update="Base\AlwaysTopShow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WindowLocation\StartFromLastPosition.xaml">
+    <Page Update="Base\SetLocation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Base\SetSizeByDesk.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Base\StartFromLastPosition.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

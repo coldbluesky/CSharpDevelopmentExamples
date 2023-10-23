@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfTest", "..\WpfTest\WpfTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfficientOffice", "..\EfficientOffice\EfficientOffice.csproj", "{7F0086A4-8ECD-4B6F-88ED-B62B7D9BBCFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsUtil", "..\WindowsUtil\WindowsUtil.csproj", "{3F0D6073-B73E-4C7C-BBAC-FC439F6F895C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsUtil", "..\WindowsUtil\WindowsUtil.csproj", "{3F0D6073-B73E-4C7C-BBAC-FC439F6F895C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

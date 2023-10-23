@@ -1,0 +1,13 @@
+﻿<Window x:Class="WindowsUtil.WindowLocation.AlwaysTopShow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsUtil.WindowLocation"
+        mc:Ignorable="d"
+        Topmost="True"
+        Title="AlwaysTopShow" Height="450" Width="800">
+    <Grid>
+        <TextBlock Text="始终显示最上层,如果有多个窗口设置topmost为true，则后创建的窗口显示在最上层" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

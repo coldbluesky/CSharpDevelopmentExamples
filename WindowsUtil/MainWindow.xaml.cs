@@ -30,14 +30,29 @@ namespace WindowsUtil
         {
             SetLocation w = new SetLocation();
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.ShowDialog();
+            w.Show();
         }
 
         private void StartFormLastLocationClick(object sender, RoutedEventArgs e)
         {
             StartFromLastPosition w = new StartFromLastPosition();
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.ShowDialog();
+            w.Show();
+        }
+
+        private void AlwaysTopShowClick(object sender, RoutedEventArgs e)
+        {
+
+            AlwaysTopShow w = new AlwaysTopShow();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            w.Show();
+        }
+
+        private void SetSizeByDeskClick(object sender, RoutedEventArgs e)
+        {
+            SetSizeByDesk w = new SetSizeByDesk();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            w.Show();
         }
     }
 }
