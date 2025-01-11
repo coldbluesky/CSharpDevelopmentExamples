@@ -18,6 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fody" Version="6.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FreeSql" Version="3.2.808" />
+    <PackageReference Include="FreeSql.DbContext" Version="3.2.808" />
+    <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.808" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.808" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FileOperations\FileOperations.csproj" />
   </ItemGroup>
 

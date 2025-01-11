@@ -13,6 +13,15 @@
     <Compile Update="Base\CostumStateTool.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Base\CustomChangeWindowSize.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Base\CustomChangeWindowSize2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Base\IsFlashWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Base\SetLocation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +34,15 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Base\CostumStateTool.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Base\CustomChangeWindowSize.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Base\CustomChangeWindowSize2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Base\IsFlashWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

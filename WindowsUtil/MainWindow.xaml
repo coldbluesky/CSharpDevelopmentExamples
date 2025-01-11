@@ -6,36 +6,191 @@
     xmlns:local="clr-namespace:WindowsUtil"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
+    Width="600"
     Height="450"
-    WindowStartupLocation="CenterScreen"
+    d:DataContext="{d:DesignInstance local:MainWindow}"
     mc:Ignorable="d">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="10,10,0,0" />
         </Style>
+
     </Window.Resources>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!--  添加Menu  -->
+                                <Menu Grid.Row="0" ItemsSource="{Binding MenuItems}">
+                                    <MenuItem Header="test" />
+                                </Menu>
+
+                                <!--  添加其他内容  -->
+                                <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
     <Grid>
-        <WrapPanel>
-            <Button
-                Height="30"
-                Click="SetLocationClick"
-                Content="窗体位置" />
-            <Button
-                Height="30"
-                Margin="10,10,0,0"
-                Click="StartFormLastLocationClick"
-                Content="从上次位置打开" />
-            <Button
-                Height="30"
-                Margin="10,10,0,0"
-                Click="AlwaysTopShowClick"
-                Content="窗口始终最上层" />
-            <Button
-                Height="30"
-                Margin="10,10,0,0"
-                Click="SetSizeByDeskClick"
-                Content="根据桌面大小设置窗口大小" />
-        </WrapPanel>
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <!--  触发器，例如一个按钮，用于打开Popup  -->
+                <Button
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="Button_Click"
+                    Content="打开Popup" />
+
+                <!--  Popup控件  -->
+                <Popup
+                    x:Name="myPopup"
+                    IsOpen="False"
+                    Placement="Mouse"
+                    StaysOpen="False">
+                    <Border
+                        Padding="10"
+                        Background="White"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="这是一个Popup中的TextBlock" />
+                            <TextBox Margin="0,5,0,0" Text="这是一个TextBox，你可以输入文字。" />
+                            <Button Content="点击我" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+            <GroupBox Header="窗口样式">
+                <WrapPanel>
+                    <Button
+                        Height="30"
+                        Click="SetLocationClick"
+                        Content="窗体位置" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="StartFormLastLocationClick"
+                        Content="从上次位置打开" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="AlwaysTopShowClick"
+                        Content="窗口始终最上层" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="SetSizeByDeskClick"
+                        Content="根据桌面大小设置窗口大小" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="CutomChangeWindowSizeClick"
+                        Content="自定义改变窗口大小" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="CutomChangeWindowSizeClick2"
+                        Content="自定义改变窗口大小2" />
+
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Header="其他">
+                <WrapPanel>
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="ThreadPulse"
+                        Content="Monitor线程同步" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="ThreadStart"
+                        Content="线程启动" />
+                    <TextBox Width="80" Text="{Binding TestText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="TestFody"
+                        Content="测试fody" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="FreesqlTest"
+                        Content="freesql测试" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="FlashClick"
+                        Content="窗体闪烁" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="CatchGlobleExceptions"
+                        Content="全局异常" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="StartThreadWithToken"
+                        Content="开启线程可结束" />
+                    <Button
+                        Height="30"
+                        Margin="10,10,0,0"
+                        Click="CancelThread"
+                        Content="结束线程" />
+                    <TextBox Width="50" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Width="100">测试</TextBlock>
+                    <TextBlock Width="100" Text="{Binding CoilType}" />
+                </WrapPanel>
+            </GroupBox>
+            <StackPanel>
+                <Path
+                    Fill="LightPink"
+                    Stroke="Pink"
+                    StrokeThickness="2">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="50,10">
+                                <LineSegment Point="100,50" />
+                                <LineSegment Point="50,100" />
+                                <LineSegment Point="0,50" />
+                                <LineSegment Point="0,10" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </StackPanel>
+            <Canvas>
+                <!--  矩形形状  -->
+                <Rectangle
+                    Canvas.Left="50"
+                    Canvas.Top="50"
+                    Width="100"
+                    Height="50"
+                    Fill="LightBlue" />
+
+                <!--  文本块  -->
+                <TextBlock
+                    Canvas.Left="70"
+                    Canvas.Top="70"
+                    FontSize="14"
+                    Foreground="Black"
+                    Text="Hello, World!" />
+            </Canvas>
+        </StackPanel>
+
     </Grid>
 </Window>

@@ -5,24 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WindowsUtil.WindowLocation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="80"
-    d:DesignWidth="200"
+    Width="600"
+    Height="450"
     Background="White"
     FontSize="12"
-    Top="{Binding ElementName=topSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-    Left="{Binding ElementName=leftSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
     mc:Ignorable="d">
+    <!--  Top="{Binding ElementName=topSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  -->
+    <!--  Left="{Binding ElementName=leftSlider,Path=Value,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  -->
     <Grid>
         <StackPanel Margin="10" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="左边距 " />
-                <Slider x:Name="leftSlider" Maximum="1000" Width="100"/>
+                <Slider
+                    x:Name="leftSlider"
+                    Width="100"
+                    Maximum="1000" />
             </StackPanel>
             <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                 <TextBlock Text="上边距 " />
-                <Slider x:Name="topSlider" Maximum="1000" Width="100"  />
+                <Slider
+                    x:Name="topSlider"
+                    Width="100"
+                    Maximum="1000" />
             </StackPanel>
-            <Button Content="确定" Click="Button_Click"/>
+            <Button Click="Button_Click" Content="确定" />
         </StackPanel>
     </Grid>
 </Window>

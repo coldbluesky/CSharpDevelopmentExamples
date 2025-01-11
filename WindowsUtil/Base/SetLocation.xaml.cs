@@ -23,7 +23,8 @@ namespace WindowsUtil.WindowLocation
         public SetLocation()
         {
             InitializeComponent();
-           
+            this.Left = SystemParameters.WorkArea.Right - this.Width - 3;
+            this.Top =  3;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
