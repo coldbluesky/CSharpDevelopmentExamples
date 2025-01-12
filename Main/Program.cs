@@ -26,28 +26,19 @@ using System.ComponentModel;
 using System;
 using HslCommunication.Profinet.Siemens;
 using System.Threading;
+using Console;
 
 namespace CSharpDevelopmentExamples
 {
-    internal class Program
+    public class Program
     {
 
-        static System.Timers.Timer timer;
-        static bool isFirstExecution = true;
-        private static UTF8Encoding utf8BOM = new UTF8Encoding(true);
-        public static void Main(string[] args)
-        {
+        
+        IConvertibleImpl am = new IConvertibleImpl();
 
-           List<Model> models =     new List<Model>();
-           models.Add(new Model(){Index = 1});
-           models.Add(new Model(){Index = 2});
-           var a = models.Min(x => x.Index);
-
-        }
-        static string ConvertToHex(string s)
+        public void Run()
         {
-            var num = int.Parse(s);
-            return num.ToString("X2");
+            
         }
     }
 
