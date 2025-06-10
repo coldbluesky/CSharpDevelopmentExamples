@@ -38,7 +38,13 @@ namespace CSharpDevelopmentExamples
 
         public void Run()
         {
-            
+            var a = GetUnitIndex(1);
+        }
+        public (int, int) GetUnitIndex(int deviceIndex)
+        {
+            var mod = deviceIndex % 2;
+            var index = (deviceIndex - mod) / 2;
+            return (mod, index);
         }
     }
 

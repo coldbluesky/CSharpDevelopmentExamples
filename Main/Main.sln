@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfficientOffice", "..\Effic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsUtil", "..\WindowsUtil\WindowsUtil.csproj", "{3F0D6073-B73E-4C7C-BBAC-FC439F6F895C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice", "..\Practice\Practice.csproj", "{9702C98C-C937-46A6-9010-42708942D0EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practice", "..\Practice\Practice.csproj", "{9702C98C-C937-46A6-9010-42708942D0EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCultureDemo", "..\MultiCultureDemo\MultiCultureDemo.csproj", "{B3EC5764-350F-4FA3-9139-033984A32DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "..\test\test.csproj", "{C9BD8771-F387-43C4-802F-ADC99B87038F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{9702C98C-C937-46A6-9010-42708942D0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9702C98C-C937-46A6-9010-42708942D0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9702C98C-C937-46A6-9010-42708942D0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EC5764-350F-4FA3-9139-033984A32DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EC5764-350F-4FA3-9139-033984A32DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EC5764-350F-4FA3-9139-033984A32DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EC5764-350F-4FA3-9139-033984A32DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BD8771-F387-43C4-802F-ADC99B87038F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BD8771-F387-43C4-802F-ADC99B87038F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BD8771-F387-43C4-802F-ADC99B87038F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BD8771-F387-43C4-802F-ADC99B87038F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
